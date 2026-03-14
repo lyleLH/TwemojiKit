@@ -74,6 +74,7 @@ public class TwemojiPickerViewController: UIViewController {
             )
             .navigationTitle(TwemojiL10n("twemoji.picker.title"))
             .navigationBarTitleDisplayMode(.inline)
+            .modifier(ToolbarBackgroundModifier())
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(TwemojiL10n("twemoji.picker.cancel")) { [weak self] in
@@ -198,4 +199,20 @@ public class TwemojiPickerViewController: UIViewController {
         "♻️", "⚠️", "🚫", "📛", "♈", "♉", "♊", "♋",
         "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓",
     ]
+}
+
+// MARK: - Toolbar Background Modifier
+
+/// Applies `.toolbarBackground(.visible)` on iOS 16+, no-op on iOS 15.
+@available(iOS 15.0, *)
+private struct ToolbarBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content
+                .toolbarBackground(Color(.systemBackground), for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
+        } else {
+            content
+        }
+    }
 }
