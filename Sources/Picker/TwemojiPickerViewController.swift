@@ -53,6 +53,7 @@ public class TwemojiPickerViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
 
         let currentSections = sections ?? Self.defaultSections
         let recents = recentEmojis.isEmpty ? Self.defaultRecentStore.emojis : recentEmojis
@@ -83,8 +84,10 @@ public class TwemojiPickerViewController: UIViewController {
                 }
             }
         }
+        .navigationViewStyle(.stack)
 
         let hostingController = UIHostingController(rootView: pickerView)
+        hostingController.view.backgroundColor = .systemBackground
         addChild(hostingController)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingController.view)

@@ -26,14 +26,18 @@ class DemoRootViewController: UIViewController, TwemojiPickerViewControllerDeleg
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Auto-present for testing
-        openPicker()
+        if !hasPresented {
+            hasPresented = true
+            openPicker()
+        }
     }
+
+    private var hasPresented = false
 
     @objc private func openPicker() {
         let picker = TwemojiPickerViewController()
         picker.delegate = self
-        picker.isSingleSelection = true
+        picker.isSingleSelection = false
         picker.modalPresentationStyle = .pageSheet
         if let sheet = picker.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
