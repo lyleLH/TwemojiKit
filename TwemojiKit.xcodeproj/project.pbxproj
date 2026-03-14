@@ -36,6 +36,8 @@
 		AA00010000000000000000A9 /* PickerDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00010000000000000000A8 /* PickerDemoView.swift */; };
 		BB00010000000000000000B2 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00010000000000000000B1 /* String+Localization.swift */; };
 		BB00010000000000000000B4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB00010000000000000000B8 /* Localizable.strings */; };
+		CC00010000000000000000C2 /* DemoRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00010000000000000000C1 /* DemoRootViewController.swift */; };
+		CC00010000000000000000D2 /* TwemojiPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00010000000000000000D1 /* TwemojiPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,8 @@
 		BB00010000000000000000B1 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		BB00010000000000000000B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB00010000000000000000B5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		CC00010000000000000000C1 /* DemoRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoRootViewController.swift; sourceTree = "<group>"; };
+		CC00010000000000000000D1 /* TwemojiPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwemojiPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +227,7 @@
 				FD1AD5782452B51A00B666CF /* EmojiTableViewCell.swift */,
 				FD1AD5792452B51A00B666CF /* EmojiTableViewCell.xib */,
 				AA00010000000000000000A8 /* PickerDemoView.swift */,
+				CC00010000000000000000C1 /* DemoRootViewController.swift */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				AA00010000000000000000A2 /* TwemojiPickerSection.swift */,
 				AA00010000000000000000A4 /* TwemojiRecentStore.swift */,
 				AA00010000000000000000A6 /* TwemojiPickerView.swift */,
+				CC00010000000000000000D1 /* TwemojiPickerViewController.swift */,
 			);
 			path = Picker;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 				AA00010000000000000000A3 /* TwemojiPickerSection.swift in Sources */,
 				AA00010000000000000000A5 /* TwemojiRecentStore.swift in Sources */,
 				AA00010000000000000000A7 /* TwemojiPickerView.swift in Sources */,
+				CC00010000000000000000D2 /* TwemojiPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +423,7 @@
 				FD1AD5762452B4AC00B666CF /* ListViewController.swift in Sources */,
 				FDD5A788245295130050AEAC /* SceneDelegate.swift in Sources */,
 				AA00010000000000000000A9 /* PickerDemoView.swift in Sources */,
+				CC00010000000000000000C2 /* DemoRootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

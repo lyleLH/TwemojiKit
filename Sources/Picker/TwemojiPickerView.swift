@@ -92,6 +92,7 @@ public struct TwemojiPickerView: View {
             // Category tab bar
             if allSections.count > 1 {
                 categoryTabBar
+                Divider()
             }
 
             // Emoji grid
@@ -145,7 +146,7 @@ public struct TwemojiPickerView: View {
                 Text(section.title)
                     .font(.system(size: 10))
                     .fontWeight(isSelected ? .semibold : .regular)
-                    .foregroundColor(isSelected ? .accentColor : .secondary)
+                    .foregroundColor(isSelected ? .accentColor : Color(.secondaryLabel))
                     .lineLimit(1)
 
                 // Selected indicator
@@ -196,7 +197,7 @@ public struct TwemojiPickerView: View {
 
         return TwemojiCellView(emoji: emoji, size: cellSize - 8)
             .frame(width: cellSize, height: cellSize)
-            .background(Color(.systemGray6).opacity(0.5))
+            .background(Color(.secondarySystemGroupedBackground))
             .cornerRadius(8)
     }
 }

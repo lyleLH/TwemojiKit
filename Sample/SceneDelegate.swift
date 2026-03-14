@@ -15,12 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        if #available(iOS 14.0, *) {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: PickerDemoView())
-            self.window = window
-            window.makeKeyAndVisible()
+        let window = UIWindow(windowScene: windowScene)
+        if #available(iOS 15.0, *) {
+            window.rootViewController = DemoRootViewController()
         }
+        self.window = window
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_: UIScene) {
