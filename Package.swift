@@ -4,8 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "TwemojiKit",
+    defaultLocalization: "en",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -27,7 +28,10 @@ let package = Package(
                 .product(name: "SDWebImage", package: "SDWebImage")
             ],
             path: "Sources",
-            resources: [.copy("./Core/twemoji.min.js")]
+            resources: [
+                .copy("./Core/twemoji.min.js"),
+                .process("Resources")
+            ]
         )
     ],
     swiftLanguageVersions: [

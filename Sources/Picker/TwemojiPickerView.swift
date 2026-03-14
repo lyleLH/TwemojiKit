@@ -48,7 +48,7 @@ public struct TwemojiPickerView: View {
     public init(
         sections: [TwemojiPickerSection],
         recentEmojis: [String] = [],
-        recentTitle: String = "Recent",
+        recentTitle: String = TwemojiL10n("twemoji.recent"),
         columns: Int = 6,
         initialSection: Int? = nil,
         onSelect: @escaping (String) -> Void

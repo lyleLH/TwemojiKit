@@ -40,7 +40,7 @@ struct PickerDemoView: View {
                         Image(systemName: "face.smiling")
                             .font(.system(size: 60))
                             .foregroundColor(.secondary.opacity(0.4))
-                        Text("No emoji selected")
+                        Text(TwemojiL10n("twemoji.picker.no_selection"))
                             .foregroundColor(.secondary)
                     }
                 }
@@ -53,7 +53,7 @@ struct PickerDemoView: View {
                 } label: {
                     HStack {
                         Image(systemName: "face.smiling.inverse")
-                        Text("Choose Twemoji")
+                        Text(TwemojiL10n("twemoji.picker.choose"))
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -77,16 +77,15 @@ struct PickerDemoView: View {
         NavigationView {
             TwemojiPickerView(
                 sections: [
-                    TwemojiPickerSection(title: "Smileys", emojis: Self.smileys),
-                    TwemojiPickerSection(title: "Hearts", emojis: Self.hearts),
-                    TwemojiPickerSection(title: "Animals", emojis: Self.animals),
-                    TwemojiPickerSection(title: "Food", emojis: Self.food),
-                    TwemojiPickerSection(title: "Activity", emojis: Self.activity),
-                    TwemojiPickerSection(title: "Travel", emojis: Self.travel),
-                    TwemojiPickerSection(title: "Objects", emojis: Self.objects),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.smileys"), emojis: Self.smileys),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.hearts"), emojis: Self.hearts),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.animals"), emojis: Self.animals),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.food"), emojis: Self.food),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.activity"), emojis: Self.activity),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.travel"), emojis: Self.travel),
+                    TwemojiPickerSection(title: TwemojiL10n("twemoji.category.objects"), emojis: Self.objects),
                 ],
                 recentEmojis: recentStore.emojis,
-                recentTitle: "Recent",
                 columns: 6,
                 onSelect: { emoji in
                     selectedEmoji = emoji
@@ -95,16 +94,16 @@ struct PickerDemoView: View {
                     showPicker = false
                 }
             )
-            .navigationTitle("Choose Emoji")
+            .navigationTitle(TwemojiL10n("twemoji.picker.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button(TwemojiL10n("twemoji.picker.cancel")) {
                         showPicker = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Clear") {
+                    Button(TwemojiL10n("twemoji.picker.clear")) {
                         recentStore.clear()
                     }
                     .font(.subheadline)

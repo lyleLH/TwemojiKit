@@ -50,7 +50,7 @@ public class TwemojiRecentStore: ObservableObject {
     }
 
     /// Returns a `TwemojiPickerSection` containing the recent emojis.
-    public func section(title: String = "Recently Used") -> TwemojiPickerSection {
+    public func section(title: String = TwemojiL10n("twemoji.recently_used")) -> TwemojiPickerSection {
         TwemojiPickerSection(id: "TwemojiRecentStore.\(key)", title: title, emojis: emojis)
     }
 

@@ -34,6 +34,8 @@
 		AA00010000000000000000A5 /* TwemojiRecentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00010000000000000000A4 /* TwemojiRecentStore.swift */; };
 		AA00010000000000000000A7 /* TwemojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00010000000000000000A6 /* TwemojiPickerView.swift */; };
 		AA00010000000000000000A9 /* PickerDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00010000000000000000A8 /* PickerDemoView.swift */; };
+		BB00010000000000000000B2 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00010000000000000000B1 /* String+Localization.swift */; };
+		BB00010000000000000000B4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB00010000000000000000B8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +101,9 @@
 		AA00010000000000000000A4 /* TwemojiRecentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwemojiRecentStore.swift; sourceTree = "<group>"; };
 		AA00010000000000000000A6 /* TwemojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwemojiPickerView.swift; sourceTree = "<group>"; };
 		AA00010000000000000000A8 /* PickerDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerDemoView.swift; sourceTree = "<group>"; };
+		BB00010000000000000000B1 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
+		BB00010000000000000000B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BB00010000000000000000B5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +140,7 @@
 				FD22009724526E030058706D /* JSContext+Extension.swift */,
 				FDD5A77D24527EF40050AEAC /* String+Extension.swift */,
 				FD1AD5712452B3CF00B666CF /* UIImage+Extension.swift */,
+				BB00010000000000000000B1 /* String+Localization.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -171,6 +177,7 @@
 				FD60519224513D2000879A54 /* Twemoji.swift */,
 				FD22009924526E370058706D /* TwemojiImage.swift */,
 				FD22009B24526E7E0058706D /* TwemojiSize.swift */,
+				BB00010000000000000000B8 /* Localizable.strings */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -327,6 +334,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = FD60516E245135EC00879A54;
@@ -347,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD60519A2451453300879A54 /* twemoji.min.js in Resources */,
+				BB00010000000000000000B4 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +391,7 @@
 				FD1AD5722452B3CF00B666CF /* UIImage+Extension.swift in Sources */,
 				FDD5A77E24527EF40050AEAC /* String+Extension.swift in Sources */,
 				FD22009A24526E370058706D /* TwemojiImage.swift in Sources */,
+				BB00010000000000000000B2 /* String+Localization.swift in Sources */,
 				AA00010000000000000000A3 /* TwemojiPickerSection.swift in Sources */,
 				AA00010000000000000000A5 /* TwemojiRecentStore.swift in Sources */,
 				AA00010000000000000000A7 /* TwemojiPickerView.swift in Sources */,
@@ -439,6 +449,15 @@
 				FDD5A791245295150050AEAC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BB00010000000000000000B8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB00010000000000000000B3 /* en */,
+				BB00010000000000000000B5 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
