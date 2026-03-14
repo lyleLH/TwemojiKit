@@ -37,9 +37,6 @@ public extension UIImage {
         return resizedImage
     }
 
-    convenience init?(named: String) {
-        self.init(named: named, in: Bundle.twemojiResouces, compatibleWith: nil)
-    }
 }
 
 extension UIImageView {
@@ -58,13 +55,5 @@ extension UIImageView {
                 completion?(.success(image))
             }
         }.resume()
-    }
-}
-
-class ImageBundle {}
-
-public extension Bundle {
-    static var twemojiResouces: Bundle {
-        return Bundle(for: type(of: ImageBundle()))
     }
 }

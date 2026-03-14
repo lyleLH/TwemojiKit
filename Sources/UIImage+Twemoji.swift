@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import TwemojiKit
 import SVGKit
 import SDWebImage
 
@@ -176,7 +175,7 @@ public extension UIImage {
     }
 }
 extension UIImage {
-    func resize(targetSize: CGSize) -> UIImage {
+    internal func resize(targetSize: CGSize) -> UIImage {
         let size = self.size
         
         let widthRatio  = targetSize.width  / size.width
