@@ -18,6 +18,7 @@ public class Twemoji {
     private let context = JSContext(virtualMachine: JSVirtualMachine())
     private typealias ConvertedType = (base: String, code: String)
 
+    public static let shared = Twemoji()
     public private(set) var isAvailable: Bool = false
     private let bundle: Bundle?
 
@@ -56,19 +57,28 @@ public class Twemoji {
     public func parseAttributeString(_ str: String, size: Int = TwemojiSize.default.size, attributes attrs: [NSAttributedString.Key: Any]? = nil) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: str, attributes: attrs)
         let emojiImages = parse(str)
-        var startIndex = attrString.string.startIndex
-        emojiImages.forEach { image in
-            if let range = attrString.string[startIndex...].range(of: image.base), let url = image.imageURL {
+
+        // Collect all ranges first, then replace from end to start to preserve positions
+        var replacements: [(nsRange: NSRange, attachment: NSTextAttachment)] = []
+        var searchStartIndex = attrString.string.startIndex
+
+        for image in emojiImages {
+            if let range = attrString.string[searchStartIndex...].range(of: image.base), let url = image.imageURL {
                 let nsRange = NSRange(range, in: attrString.string)
-                startIndex = attrString.string.index(startIndex, offsetBy: 0)
+                searchStartIndex = range.upperBound
                 let attachment = NSTextAttachment()
                 attachment.image = UIImage(url: url).resize(size: CGSize(width: size, height: size))
                 attachment.bounds = CGRect(x: 0, y: -2, width: CGFloat(size), height: CGFloat(size))
-                attrString.replaceCharacters(in: nsRange, with: NSAttributedString(attachment: attachment))
+                replacements.append((nsRange: nsRange, attachment: attachment))
             }
         }
+
+        for replacement in replacements.reversed() {
+            attrString.replaceCharacters(in: replacement.nsRange, with: NSAttributedString(attachment: replacement.attachment))
+        }
+
         if let attrs = attrs {
-            attrString.addAttributes(attrs, range: NSRange(location: 0, length: attrString.string.count))
+            attrString.addAttributes(attrs, range: NSRange(location: 0, length: attrString.length))
         }
         return NSAttributedString(attributedString: attrString)
     }
@@ -88,18 +98,13 @@ public class Twemoji {
 
 extension Twemoji {
     private func convertToCode(str: String) -> [ConvertedType] {
-        // swift scalars contains \\u{000xxxx}
         let emojis = str.emojis.map { String($0) }
         guard !emojis.isEmpty else { return [] }
         var result = [ConvertedType]()
-        emojis.enumerated().forEach { _, value in
+        for value in emojis {
             let code = value.unicodeScalars
-                .map { $0.escaped(asASCII: true) }
+                .map { String(format: "%x", $0.value) }
                 .joined(separator: "-")
-                .replacingOccurrences(of: "{", with: "")
-                .replacingOccurrences(of: "}", with: "")
-                .replacingOccurrences(of: "000", with: "")
-                .lowercased()
             if !code.isEmpty {
                 let converted: ConvertedType = (base: value, code: code)
                 result.append(converted)
@@ -108,12 +113,21 @@ extension Twemoji {
         return result
     }
 
+    private func escapeForJS(_ str: String) -> String {
+        return str
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "'", with: "\\'")
+            .replacingOccurrences(of: "\n", with: "\\n")
+            .replacingOccurrences(of: "\r", with: "\\r")
+    }
+
     private func parseWithJS(str: String) -> [ConvertedType] {
         var result = [ConvertedType]()
         str.emojis.map { String($0) }.forEach { emoji in
+            let escaped = escapeForJS(emoji)
             context?.evaluateScript("""
             var iconCode = "";
-            var twemojiCode = twemoji.parse('\(emoji)', {
+            var twemojiCode = twemoji.parse('\(escaped)', {
                 callback: function(iconId, options) {
                     iconCode = iconId;
                     return '';
@@ -129,7 +143,8 @@ extension Twemoji {
     }
 
     private func test(str: String) -> Bool {
-        context?.evaluateScript("var result = twemoji.test('\(str)');")
+        let escaped = escapeForJS(str)
+        context?.evaluateScript("var result = twemoji.test('\(escaped)');")
         guard let result = context?.objectForKeyedSubscript("result")?.toBool() else { return false }
         return result
     }

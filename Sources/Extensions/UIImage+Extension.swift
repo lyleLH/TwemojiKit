@@ -12,8 +12,10 @@ public extension UIImage {
     convenience init(url: URL) {
         do {
             let data = try Data(contentsOf: url)
-            self.init(data: data)!
-            return
+            if UIImage(data: data) != nil {
+                self.init(data: data)!
+                return
+            }
         } catch let err {
             print("Error : \(err.localizedDescription)")
         }

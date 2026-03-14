@@ -93,8 +93,18 @@ public extension UIImage {
                     return createEmojiImage(from: emoji, size: size)
                 }
                 
-                // 使用 SDWebImage 下载 SVG 数据
-                let (data, _) = try await URLSession.shared.data(from: url)
+                // 使用 URLSession 下载 SVG 数据
+                let data: Data = try await withCheckedThrowingContinuation { continuation in
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        if let error = error {
+                            continuation.resume(throwing: error)
+                        } else if let data = data {
+                            continuation.resume(returning: data)
+                        } else {
+                            continuation.resume(throwing: URLError(.unknown))
+                        }
+                    }.resume()
+                }
                 
                 // 创建SVG源
                 let source = SVGKSourceNSData.source(from: data, urlForRelativeLinks: url)
@@ -112,13 +122,12 @@ public extension UIImage {
                     return createEmojiImage(from: emoji, size: size)
                 }
                 
-                // 使用 SDWebImage 缓存图片，但使用自定义的缓存键来避免 PNG 解码问题
-                let cacheKey = "svg_\(getCacheKey(emoji: emoji, isStandard: !forThumbnail))"
+                // 缓存图片（使用与读取一致的 cacheKey）
                 SDImageCache.shared.store(image, forKey: cacheKey, completion: nil)
-                
+
                 // 如果是标准尺寸，同时生成并缓存缩略图
                 if !forThumbnail {
-                    let thumbnailKey = "svg_\(getCacheKey(emoji: emoji, isStandard: false))"
+                    let thumbnailKey = getCacheKey(emoji: emoji, isStandard: false)
                     svgImage.size = thumbnailSize
                     if let thumbnailImage = svgImage.uiImage {
                         SDImageCache.shared.store(thumbnailImage, forKey: thumbnailKey, completion: nil)
