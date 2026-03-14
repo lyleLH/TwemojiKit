@@ -38,14 +38,15 @@ class DemoRootViewController: UIViewController, TwemojiPickerViewControllerDeleg
         let picker = TwemojiPickerViewController()
         picker.delegate = self
         picker.isSingleSelection = false
-        picker.modalPresentationStyle = .pageSheet
-        if let sheet = picker.sheetPresentationController {
+        let nav = UINavigationController(rootViewController: picker)
+        nav.modalPresentationStyle = .pageSheet
+        if let sheet = nav.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             sheet.preferredCornerRadius = 32
         }
-        present(picker, animated: true)
+        present(nav, animated: true)
     }
 
     func twemojiPicker(_ picker: TwemojiPickerViewController, didSelectEmojis emojis: [String]) {

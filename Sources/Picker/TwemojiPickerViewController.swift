@@ -55,37 +55,37 @@ public class TwemojiPickerViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
+        // UIKit navigation bar — fully controllable, no SwiftUI transparency issues
+        title = TwemojiL10n("twemoji.picker.title")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: TwemojiL10n("twemoji.picker.cancel"),
+            style: .plain,
+            target: self,
+            action: #selector(cancelTapped)
+        )
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+
+        // SwiftUI picker content (no NavigationView wrapper)
         let currentSections = sections ?? Self.defaultSections
         let recents = recentEmojis.isEmpty ? Self.defaultRecentStore.emojis : recentEmojis
 
-        let pickerView = NavigationView {
-            TwemojiPickerView(
-                sections: currentSections,
-                recentEmojis: recents,
-                columns: 6,
-                onSelect: { [weak self] emoji in
-                    guard let self = self else { return }
-                    Self.defaultRecentStore.record(emoji)
-                    self.delegate?.twemojiPicker(self, didSelectEmojis: [emoji])
-                    if self.isSingleSelection {
-                        self.dismiss(animated: true)
-                    }
-                }
-            )
-            .navigationTitle(TwemojiL10n("twemoji.picker.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .modifier(ToolbarBackgroundModifier())
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(TwemojiL10n("twemoji.picker.cancel")) { [weak self] in
-                        guard let self = self else { return }
-                        self.delegate?.twemojiPickerDidCancel(self)
-                        self.dismiss(animated: true)
-                    }
+        let pickerView = TwemojiPickerView(
+            sections: currentSections,
+            recentEmojis: recents,
+            columns: 6,
+            onSelect: { [weak self] emoji in
+                guard let self = self else { return }
+                Self.defaultRecentStore.record(emoji)
+                self.delegate?.twemojiPicker(self, didSelectEmojis: [emoji])
+                if self.isSingleSelection {
+                    self.dismiss(animated: true)
                 }
             }
-        }
-        .navigationViewStyle(.stack)
+        )
 
         let hostingController = UIHostingController(rootView: pickerView)
         hostingController.view.backgroundColor = .systemBackground
@@ -93,12 +93,17 @@ public class TwemojiPickerViewController: UIViewController {
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingController.view)
         NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         hostingController.didMove(toParent: self)
+    }
+
+    @objc private func cancelTapped() {
+        delegate?.twemojiPickerDidCancel(self)
+        dismiss(animated: true)
     }
 
     // MARK: - Default Sections
@@ -199,20 +204,4 @@ public class TwemojiPickerViewController: UIViewController {
         "♻️", "⚠️", "🚫", "📛", "♈", "♉", "♊", "♋",
         "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓",
     ]
-}
-
-// MARK: - Toolbar Background Modifier
-
-/// Applies `.toolbarBackground(.visible)` on iOS 16+, no-op on iOS 15.
-@available(iOS 15.0, *)
-private struct ToolbarBackgroundModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 16.0, *) {
-            content
-                .toolbarBackground(Color(.systemBackground), for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
-        } else {
-            content
-        }
-    }
 }
