@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - Delegate Protocol
 
+@available(iOS 15.0, *)
 public protocol TwemojiPickerViewControllerDelegate: AnyObject {
     func twemojiPicker(_ picker: TwemojiPickerViewController, didSelectEmojis emojis: [String])
     func twemojiPickerDidCancel(_ picker: TwemojiPickerViewController)
